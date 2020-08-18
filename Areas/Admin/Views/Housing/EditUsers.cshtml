@@ -1,0 +1,99 @@
+﻿@model User
+@{
+    Layout = "_EditLayout";
+    ViewData["Title"] = "EditUsers";
+    var session = new HousingSession(Context.Session);
+}
+    <aside class="sidebar">
+        <nav>
+            <ul class="sidebar__nav">
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                        <i class="mdi mdi-home-export-outline"></i>
+                        <span class="sidebar__nav__text">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                        <i class="mdi mdi-calendar-month"></i>
+                        <span class="sidebar__nav__text">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                        <i class="mdi mdi-plus-outline"></i>
+                        <span class="sidebar__nav__text">Add</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                        <i class="mdi mdi-file-document-box"></i>
+                        <span class="sidebar__nav__text">Room Status</span>
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                        @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                        {
+                            <i class="mdi mdi-pirate"></i>
+
+                        }
+                        @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                        {
+                            <i class="mdi mdi-cow"></i>
+
+                        }
+                        @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                        {
+                            <i class="mdi mdi-castle"></i>
+
+                        }
+
+                        <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                        <i class="mdi mdi-settings"></i>
+                        <span class="sidebar__nav__text">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+<section class="get-in-touch">
+    <h1 class="title">Edit Users</h1>
+    <form asp-action="EditUsers" method="post" class="contact-form row">
+        <div class="form-field col-lg-6">
+            <input asp-for="FirstName" class="input-text js-input" />
+            <label class="label" asp-for="FirstName">First Name:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="LastName" class="input-text js-input" />
+            <label class="label" asp-for="LastName">Last Name:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Email" class="input-text js-input" />
+            <label class="label" asp-for="Email">Email:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Password" class="input-text js-input" />
+            <label class="label" asp-for="Password">Password:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="RememberMe" type="checkbox" class="input-text js-input" />
+            <label class="label" asp-for="RememberMe">Sound On:</label>
+            <input type="hidden" asp-for="userId" />
+        </div>
+
+        <div class="form-field col-lg-12">
+            <button type="submit" class="submit-btn">Edit</button>
+            <a class="submit-btn" style="text-align:center" asp-area="Admin" asp-controller="Housing" asp-action="Dashboard">Cancel</a>
+        </div>
+    </form>
+</section>
+
+

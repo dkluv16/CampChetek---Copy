@@ -1,0 +1,90 @@
+﻿@model Rooms
+@{
+    Layout = "_EditLayout";
+    ViewData["Title"] = "EditStatus";
+    var session = new HousingSession(Context.Session);
+}
+<aside class="sidebar">
+    <nav>
+        <ul class="sidebar__nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                    <i class="mdi mdi-home-export-outline"></i>
+                    <span class="sidebar__nav__text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                    <i class="mdi mdi-calendar-month"></i>
+                    <span class="sidebar__nav__text">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                    <i class="mdi mdi-plus-outline"></i>
+                    <span class="sidebar__nav__text">Add</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                    <i class="mdi mdi-file-document-box"></i>
+                    <span class="sidebar__nav__text">Room Status</span>
+                </a>
+            </li>
+            <li>
+
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                    @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-pirate"></i>
+
+                    }
+                    @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                    {
+                        <i class="mdi mdi-cow"></i>
+
+                    }
+                    @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-castle"></i>
+
+                    }
+
+                    <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                    <i class="mdi mdi-settings"></i>
+                    <span class="sidebar__nav__text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<section class="get-in-touch">
+    <h1 class="title">Edit Room Status</h1>
+    <form asp-action="EditStatus" method="post" class="contact-form row">
+        <div class="form-field col-lg-6">
+            <input asp-for="Name" class="input-text js-input" />
+            <label class="label" asp-for="Name">Room:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <select asp-for="StatusId" class="input-text js-input">
+                <option value=""></option>
+                @foreach (Status b in ViewBag.Status)
+                {
+                    <option value="@b.StatusId">@b.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="StatusId">Select If Need Bedding:</label>
+            <input type="hidden" asp-for="RoomsId" />
+        </div>
+        <div class="form-field col-lg-12">
+            <button type="submit" class="submit-btn">Edit</button>
+            <a class="submit-btn" style="text-align:center" asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus">Cancel</a>
+        </div>
+    </form>
+</section>

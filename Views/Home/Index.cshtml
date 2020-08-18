@@ -1,0 +1,132 @@
+﻿@model Events
+@{
+
+    ViewData["Title"] = "Submit";
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="~/js/site.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    }
+<section class="get-in-touch">
+    <h1 class="title">Request Housing</h1>
+    <form asp-action="Index" method="post" class="contact-form row">
+
+        <!-- html -->
+        <div id="flatpickrcontainer" class="form-field col-lg-6">
+            <input asp-for="event_start" type="text" id="time" class="input-text js-input" value="" placeholder="Select Date..." data-input>
+            <label class="label" asp-for="event_start">Arrival</label>
+        </div>
+        <script>
+
+            // js initialization
+
+            flatpickr.l10ns.default.firstDayOfWeek = 0; // Monday default is sunday
+
+            document.getElementById("flatpickrcontainer").flatpickr({
+                wrap: true,
+                minDate: "today",
+                dateFormat: "m-d-Y H:i",
+                weekNumbers: true,
+                enableTime: true, // enables timepicker default is false
+                time_24hr: false, // set to false for AM PM default is false
+                onChange: function (selectedDates, dateStr, instance) {
+                    console.log("changed");
+                }
+            });
+        </script>
+     
+        <!-- html -->
+        <div id="flatpickrcontainer1" class="form-field col-lg-6">
+            <input asp-for="event_end" type="text" id="time" class="input-text js-input" value="" placeholder="Select Date..." data-input>
+            <label class="label" asp-for="event_end">Departure</label>
+        </div>
+        <script>
+
+            // js initialization
+
+            flatpickr.l10ns.default.firstDayOfWeek = 0; // Monday default is sunday
+
+            document.getElementById("flatpickrcontainer1").flatpickr({
+                wrap: true,
+                minDate: "today",
+                dateFormat: "m-d-Y H:i",
+                weekNumbers: true,
+                enableTime: true, // enables timepicker default is false
+                time_24hr: false, // set to false for AM PM default is false
+                onChange: function (selectedDates, dateStr, instance) {
+                    console.log("changed");
+                }
+            });
+        </script>
+        
+        <div class="form-field col-lg-6">
+            <input asp-for="FirstName" class="input-text js-input" type="text" required>
+            <label class="label" asp-for="FirstName">First Name</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="LastName" class="input-text js-input" type="text" required>
+            <label class="label" asp-for="LastName">Last Name</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <select asp-for="ReasonId" class="input-text js-input">
+                <option value=""></option>
+                @foreach (Reason r in ViewBag.Reason)
+                {
+                <option value="@r.ReasonId">@r.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="ReasonId">Reason For Stay</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="Email" class="input-text js-input" type="email" required>
+            <label class="label" asp-for="Email">E-mail</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="Address" class="input-text js-input" type="text" required />
+            <label class="label" asp-for="Address">Address</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="City" class="input-text js-input" type="text" required />
+            <label class="label" asp-for="City">City</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="State" class="input-text js-input" type="text" required />
+            <label class="label" asp-for="State">State</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="Zip" class="input-text js-input" type="number" value="" required />
+            <label class="label" asp-for="Zip">Zip</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="Phone" class="input-text js-input" type="text" required>
+            <label class="label" asp-for="Phone">Contact Number</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <select asp-for="BeddingId" class="input-text js-input">
+                <option value="">None</option>
+                @foreach (Bedding b in ViewBag.Bedding)
+                {
+                    <option value="@b.BeddingId">@b.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="BeddingId">Select If Need Bedding</label>
+        </div>
+        <div class="form-field col-lg-6 ">
+            <input asp-for="NumberGuest" class="input-text js-input" type="number" value="" min="1" max="13" required>
+            <label class="label" asp-for="NumberGuest">Total Number Of Guest</label>
+        </div>
+        <div class="form-field col-lg-12">
+            <input asp-for="Message" class="input-text js-input" type="text">
+            <label class="label" asp-for="Message">Any Special Needs</label>
+        </div>
+        <input type="hidden" asp-for="RoomsId" value="30" />
+        <input type="hidden" asp-for="UserId" value="3" />
+
+        <div class="form-field col-lg-12">
+            <button class="submit-btn" type="submit" value="Submit">@ViewBag.Action</button>
+        </div>
+    </form>
+</section>
+

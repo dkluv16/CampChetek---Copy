@@ -1,0 +1,135 @@
+﻿@model List<Events>
+@{
+    ViewData["Title"] = "Dashboard";
+    var session = new HousingSession(Context.Session);
+
+}
+    <aside class="sidebar">
+        <nav>
+            <ul class="sidebar__nav">
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                        <i class="mdi mdi-home-export-outline"></i>
+                        <span class="sidebar__nav__text">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                        <i class="mdi mdi-calendar-month"></i>
+                        <span class="sidebar__nav__text">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                        <i class="mdi mdi-plus-outline"></i>
+                        <span class="sidebar__nav__text">Add</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                        <i class="mdi mdi-file-document-box"></i>
+                        <span class="sidebar__nav__text">Room Status</span>
+                    </a>
+                </li>
+                <li>
+                   
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                        @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                        {
+                            <i class="mdi mdi-pirate"></i>
+                            @foreach (var users in Model)
+                            {
+                                @if (users.User.RememberMe == true)
+                                {
+                                    <audio controls autoplay hidden>
+                                        <source src="~/sounds/carstart.mp3" type="audio/mp3">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                            }
+                        }
+                        @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                        {
+                            <i class="mdi mdi-cow"></i>
+                            @foreach (var users in Model)
+                            {
+                                @if (users.User.RememberMe == true)
+                                {
+                                    <audio controls autoplay hidden>
+                                        <source src="~/sounds/cow.mp3" type="audio/mp3">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                            }
+                        }
+                        @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                        {
+                            <i class="mdi mdi-castle"></i>
+                            @foreach (var users in Model)
+                            {
+                                @if (users.User.RememberMe == true)
+                                {
+                                    <audio controls autoplay hidden>
+                                        <source src="~/sounds/service-bell_daniel_simion.mp3" type="audio/mp3">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                }
+                            }
+                        }
+
+                        <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                    </a>                 
+                </li>   
+                         <li>
+                           <a  asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                                <i class="mdi mdi-settings"></i>
+                                <span class="sidebar__nav__text">Settings</span>
+                           </a>
+                         </li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="text-center">
+        <h1 class="newUser">Houseing Request</h1>
+        <a class="submit-btn" style="text-align:center" asp-area="Admin" asp-controller="Housing" asp-action="NewSubmission">New Request</a>
+    </div>
+<table class="table table-bordered table-striped" style="background-color: white">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>@Html.ActionLink("First Name", "Dashboard", new { orderby = ViewBag.FirstNameSortParm })</th>
+            <th>@Html.ActionLink("Last Name", "Dashboard", new { orderby = ViewBag.LastNameParm })</th>
+            <th>City</th>
+            <th>State</th>
+            <th>@Html.ActionLink("Room", "Dashboard", new { orderby = ViewBag.RoomsIdParm })</th>
+            <th>@Html.ActionLink("Arrival", "Dashboard", new { orderby = ViewBag.ArrivalDateParm })</th>
+            <th>@Html.ActionLink("Departure", "Dashboard", new { orderby = ViewBag.DepartureDateParm })</th>
+            <th>@Html.ActionLink("# Of Guest", "Dashboard", new { orderby = ViewBag.NumberGuestParm })</th>
+            <th>@Html.ActionLink("Bedding", "Dashboard", new { orderby = ViewBag.BeddingParm })</th>
+            <th>@Html.ActionLink("Date Updated", "Dashboard", new { orderby = ViewBag.DateUpdateParm })</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var housing in @Model)
+        {
+            <tr>
+                <td>@housing.event_id</td>
+                <td>@housing.FirstName</td>
+                <td>@housing.LastName</td>
+                <td>@housing.City</td>
+                <td>@housing.State</td>
+                <td>@housing.Rooms.Name</td>
+                <td>@housing.event_start</td>
+                <td>@housing.event_end</td>
+                <td>@housing.NumberGuest</td>
+                <td>@housing.Bedding.Name</td>
+                <td>@housing.DateUpdate</td>
+                <td>
+                    <a asp-area="Admin" asp-action="Detail" asp-route-id="@housing.event_id"><img src="~/img/edit.png" alt="View" style="width:24px; height:24px;" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

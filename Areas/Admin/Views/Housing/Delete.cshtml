@@ -1,0 +1,160 @@
+﻿@model Events
+@{
+    Layout = "_EditLayout";
+    ViewBag.FirstName = "Delete Request";
+    var session = new HousingSession(Context.Session);
+}
+<aside class="sidebar">
+    <nav>
+        <ul class="sidebar__nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                    <i class="mdi mdi-home-export-outline"></i>
+                    <span class="sidebar__nav__text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                    <i class="mdi mdi-calendar-month"></i>
+                    <span class="sidebar__nav__text">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                    <i class="mdi mdi-plus-outline"></i>
+                    <span class="sidebar__nav__text">Add</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                    <i class="mdi mdi-file-document-box"></i>
+                    <span class="sidebar__nav__text">Room Status</span>
+                </a>
+            </li>
+            <li>
+
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                    @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-pirate"></i>
+
+                    }
+                    @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                    {
+                        <i class="mdi mdi-cow"></i>
+
+                    }
+                    @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-castle"></i>
+                       
+                    }
+
+                    <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                    <i class="mdi mdi-settings"></i>
+                    <span class="sidebar__nav__text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<section class="get-in-touch">
+    <h1 class="title">Delete</h1>
+    <form asp-action="Delete" method="post" class="contact-form row">
+        <div action="/" class="form-field col-lg-6">
+            <input asp-for="event_start" type="date" class="input-text js-input" />
+            <label class="label" asp-for="event_start">Arrival Date:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="event_end" type="date" class="input-text js-input" />
+            <label class="label" asp-for="event_end">Departure Date:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="FirstName" class="input-text js-input" />
+            <label class="label" asp-for="FirstName">First Name:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="LastName" class="input-text js-input" />
+            <label class="label" asp-for="LastName">Last Name:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <select asp-for="ReasonId" class="input-text js-input">
+                <option value=""></option>
+                @foreach (Reason r in ViewBag.Reason)
+                {
+                    <option value="@r.ReasonId">@r.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="ReasonId">Reason For Stay</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Email" class="input-text js-input" />
+            <label class="label" asp-for="Email">Email:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Address" class="input-text js-input" />
+            <label class="label" asp-for="Address">Address:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="City" class="input-text js-input" />
+            <label class="label" asp-for="City">City:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="State" class="input-text js-input" />
+            <label class="label" asp-for="State">State:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Zip" class="input-text js-input" />
+            <label class="label" asp-for="Zip">Zip:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Phone" class="input-text js-input" disabled />
+            <label class="label" asp-for="Phone">Phone:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <select asp-for="BeddingId" class="input-text js-input" disabled>
+                <option value=""></option>
+                @foreach (Bedding b in ViewBag.Bedding)
+                {
+                    <option value="@b.BeddingId">@b.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="BeddingId">Select If Need Bedding:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="NumberGuest" class="input-text js-input" type="number" min="1" max="13" disabled>
+            <label asp-for="NumberGuest" class="label">Total Number Of Guest</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="Message" class="input-text js-input" type="text" disabled>
+            <label class="label" asp-for="Message">Any Special Needs</label>
+        </div>
+        <div class="form-field col-lg-12">
+            <select asp-for="RoomsId" class="input-text js-input" disabled>
+                <option value=""></option>
+                @foreach (Rooms r in ViewBag.Rooms)
+                {
+                    <option value="@r.RoomsId">@r.Name</option>
+                }
+            </select>
+            <label class="label" asp-for="RoomsId">Select a Room:</label>
+        </div>
+        <div class="form-field col-lg-6">
+            <input asp-for="sendEmail" class="input-text js-input" type="checkbox" />
+            <label class="label" asp-for="sendEmail">Send Email:</label>
+        </div>
+        <input type="hidden" asp-for="UserId" value="3" />
+        <input type="hidden" asp-for="event_id" />
+        <div class="form-field col-lg-12">
+            <button type="submit" class="submit-btn">Delete</button>
+            <a class="submit-btn" style="text-align:center" asp-area="Admin" asp-controller="Housing" asp-action="Dashboard">Cancel</a>
+        </div>
+    </form>
+</section>
+
+

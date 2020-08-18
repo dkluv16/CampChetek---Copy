@@ -1,0 +1,121 @@
+﻿@model List<Rooms>
+@{
+
+    ViewData["Title"] = "RoomStatus";
+    var session = new HousingSession(Context.Session);
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul class="sidebar__nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                    <i class="mdi mdi-home-export-outline"></i>
+                    <span class="sidebar__nav__text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                    <i class="mdi mdi-calendar-month"></i>
+                    <span class="sidebar__nav__text">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                    <i class="mdi mdi-plus-outline"></i>
+                    <span class="sidebar__nav__text">Add</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                    <i class="mdi mdi-file-document-box"></i>
+                    <span class="sidebar__nav__text">Room Status</span>
+                </a>
+            </li>
+            <li>
+
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                    @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-pirate"></i>
+
+                    }
+                    @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                    {
+                        <i class="mdi mdi-cow"></i>
+
+                    }
+                    @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-castle"></i>
+
+                    }
+
+                    <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                    <i class="mdi mdi-settings"></i>
+                    <span class="sidebar__nav__text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<div class="text-center">
+    <h1>RoomStatus</h1>
+    </div>
+    <form asp-action="RoomStatus" method="post">
+        <table class="table table-striped" id="tablec" style="background-color: white">
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var rooms in Model)
+                {
+                    @if (rooms.Status.Name == "Dirty")
+                    {
+                        <tr style="background-color: red; color: snow">
+                            <td>@rooms.Name</td>
+                            <td>@rooms.Status.Name</td>
+                            <td><a asp-area="Admin" asp-action="EditStatus" asp-route-id="@rooms.RoomsId"><img src="~/img/edit.png" alt="View" style="width:24px; height:24px;" /></a></td>
+                        </tr>
+                    }
+                    @if (rooms.Status.Name == "Occupied")
+                    {
+                        <tr style="background-color: gold; color: snow">
+                            <td>@rooms.Name</td>
+                            <td>@rooms.Status.Name</td>
+                            <td><a asp-area="Admin" asp-action="EditStatus" asp-route-id="@rooms.RoomsId"><img src="~/img/edit.png" alt="View" style="width:24px; height:24px;" /></a></td>
+                        </tr>
+                    }
+                    @if (rooms.Status.Name == "Clean")
+                    {
+                        <tr style="background-color: forestgreen; color: snow">
+                            <td>@rooms.Name</td>
+                            <td>@rooms.Status.Name</td>
+                            <td><a asp-area="Admin" asp-action="EditStatus" asp-route-id="@rooms.RoomsId"><img src="~/img/edit.png" alt="View" style="width:24px; height:24px;" /></a></td>
+                        </tr>
+                    }
+                    @if (rooms.Status.Name == "Ready")
+                    {
+                        <tr style="background-color: blue; color: snow">
+                            <td>@rooms.Name</td>
+                            <td>@rooms.Status.Name</td>
+                            <td><a asp-area="Admin" asp-action="EditStatus" asp-route-id="@rooms.RoomsId"><img src="~/img/edit.png" alt="View" style="width:24px; height:24px;" /></a></td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+
+        </table>
+        <a class="btn btn-white ml-2" asp-area="Admin" asp-controller="Housing" asp-action="Dashboard">Home</a>
+    </form>

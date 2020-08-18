@@ -1,0 +1,149 @@
+﻿@model Events
+@{
+    //Layout = "Sidebar";
+    ViewData["Title"] = "Detail";
+    var session = new HousingSession(Context.Session);
+
+}
+<aside class="sidebar">
+    <nav>
+        <ul class="sidebar__nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Dashboard" class="sidebar__nav__link">
+                    <i class="mdi mdi-home-export-outline"></i>
+                    <span class="sidebar__nav__text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Events" asp-action="Calendar" class="sidebar__nav__link">
+                    <i class="mdi mdi-calendar-month"></i>
+                    <span class="sidebar__nav__text">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Add" class="sidebar__nav__link">
+                    <i class="mdi mdi-plus-outline"></i>
+                    <span class="sidebar__nav__text">Add</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="RoomStatus" class="sidebar__nav__link">
+                    <i class="mdi mdi-file-document-box"></i>
+                    <span class="sidebar__nav__text">Room Status</span>
+                </a>
+            </li>
+            <li>
+
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="sidebar__nav__link">
+
+                    @if (session.GetName() == "DANAEL@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-pirate"></i>
+
+                    }
+                    @if (session.GetName() == "MARIKKAKAY@YAHOO.COM")
+                    {
+                        <i class="mdi mdi-cow"></i>
+
+                    }
+                    @if (session.GetName() == "PR@CAMPCHETEK.ORG")
+                    {
+                        <i class="mdi mdi-castle"></i>
+
+                    }
+
+                    <span class="sidebar__nav__text">@(session.GetName() == null ? "Logout" : session.GetName())</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Housing" asp-action="Settings" class="sidebar__nav__link">
+                    <i class="mdi mdi-settings"></i>
+                    <span class="sidebar__nav__text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<div class="main">
+    <div class="text-center">
+        <h1>Detail</h1>
+    </div>
+    <table class="table table-bordered table-striped" style="background-color: white">
+        <tr>
+            <td><strong>ID:</strong></td>
+            <td>@Model.event_id</td>
+        </tr>
+        <tr>
+            <td><strong>Arrival Date:</strong></td>
+            <td>@Model.event_start</td>
+        </tr>
+        <tr>
+            <td><strong>Departure Date:</strong></td>
+            <td>@Model.event_end</td>
+        </tr>
+        <tr>
+            <td><strong>Reason For Stay:</strong></td>
+            <td>@Model.Reason.Name</td>
+        </tr>
+        <tr>
+            <td><strong>First Name:</strong></td>
+            <td>@Model.FirstName</td>
+        </tr>
+        <tr>
+            <td><strong>Last Name:</strong></td>
+            <td>@Model.LastName</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td><strong>Address:</strong></td>
+            <td>@Model.Address</td>
+        </tr>
+        <tr>
+            <td><strong>City:</strong></td>
+            <td>@Model.City</td>
+        </tr>
+        <tr>
+            <td><strong>State:</strong></td>
+            <td>@Model.State</td>
+        </tr>
+        <tr>
+            <td><strong>Zip:</strong></td>
+            <td>@Model.Zip</td>
+        </tr>
+        <tr>
+            <td><strong>Phone:</strong></td>
+            <td>@Model.Phone</td>
+        </tr>
+        <tr>
+            <td><strong>Bedding:</strong></td>
+            <td>@Model.Bedding.Name</td>
+        </tr>
+        <tr>
+            <td><strong>Number Of Guest:</strong></td>
+            <td>@Model.NumberGuest</td>
+        </tr>
+        <tr>
+            <td><strong>Message:</strong></td>
+            <td>@Model.Message</td>
+        </tr>
+        <tr>
+            <td><strong>Room:</strong></td>
+            <td>@Model.Rooms.Name</td>
+        </tr>
+        <tr>
+            <td><strong>Updated By:</strong></td>
+            <td>@Model.User.FirstName @Model.User.LastName</td>
+        </tr>
+        <tr>
+            <td><strong>Updated Time:</strong></td>
+            <td>@Model.DateUpdate</td>
+        </tr>
+    </table>
+    <a class="btn btn-white ml-2" asp-area="Admin" asp-controller="Housing" asp-action="Dashboard">Close</a>
+    <a class="btn btn-white ml-2" asp-area="Admin" asp-controller="Housing" asp-action="Edit" asp-route-id="@Model.event_id">Edit</a>
+    <a class="btn btn-white ml-2" asp-area="Admin" asp-controller="Housing" asp-action="Delete" asp-route-id="@Model.event_id">Delete</a>
+</div>
